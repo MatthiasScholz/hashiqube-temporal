@@ -77,17 +77,6 @@ EOF
 chmod +x /vagrant/hashicorp/nomad/secret.sh
 cd /vagrant/hashicorp/nomad
 . ./secret.sh
-export GH_AUTH_B64=$(echo "${GH_USER}:${GH_TOKEN}" | tr -d '[[:space:]]' | base64)
-mkdir -p /etc/docker
-cat <<EOF | sudo tee /etc/docker/dockercfg.json
-{
-  "auths" : {
-    "ghcr.io" : {
-      "auth": "${GH_AUTH_B64}"
-    }
-  }
-}
-EOF
 
   # check if nomad is installed, start and exit
   if [ -f /usr/local/bin/nomad ]; then
