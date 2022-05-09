@@ -46,7 +46,8 @@ Vagrant::configure("2") do |config|
 
   machines.each_with_index do |machine, index|
 
-    config.vm.box = "ubuntu/bionic64"
+    # config.vm.box = "ubuntu/bionic64"
+    config.vm.box = "ubuntu/focal64"
     config.vm.define machine[:name] do |config|
 
       config.ssh.forward_agent = true
