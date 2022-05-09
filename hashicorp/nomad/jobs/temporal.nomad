@@ -22,7 +22,7 @@ job "temporal" {
         "traefik.tcp.routers.temporal-app.rule=HostSNI(`*`)",
         "traefik.tcp.routers.temporal-app.entrypoints=grpc",
         "traefik.enable=true",
-      ]        
+      ]
 
       port = "temporal-app"
     }
@@ -53,7 +53,7 @@ job "temporal" {
       }
 
       config {
-        image = "temporalio/auto-setup:1.15.1"
+        image = "temporalio/auto-setup:1.16.1"
         force_pull = true
 
         ports = ["temporal-app"]
@@ -115,7 +115,7 @@ system.advancedVisibilityWritingMode:
 EOF
         destination = "config/dynamicconfig/development.yaml"
       }
-      
+
     }
 
     task "temporal-web" {
@@ -127,7 +127,7 @@ EOF
       }
 
       config {
-        image = "temporalio/web:1.14.0"
+        image = "temporalio/web:1.15.0"
         force_pull = true
 
         ports = ["temporal-web"]
@@ -139,5 +139,5 @@ EOF
 
     }
   }
-  
+
 }
