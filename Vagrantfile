@@ -64,6 +64,7 @@ Vagrant::configure("2") do |config|
         config.vm.network "forwarded_port", guest: 3333, host: 3333 # docsify
         config.vm.network "forwarded_port", guest: 80, host: 80 # traefik dashboard
         config.vm.network "forwarded_port", guest: 8082, host: 8082 # traefik metrics
+        config.vm.network "forwarded_port", guest: 7233, host: 7233 # temporal
       end
 
       config.vm.hostname = "#{machine[:name]}"
