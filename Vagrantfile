@@ -19,13 +19,19 @@ vbox_config = [
   { '--audio' => 'none' },
 ]
 
+# https://www.vagrantup.com/docs/providers/vmware/configuration
+vmware_config = [
+  { '--memsize' => '4096'},
+  { '--numvcpus' => '2'},
+]
+
 # machine(s) hash
 machines = [
   {
     :name => "hashiqube.#{fqdn}",
     :ip => '192.168.56.192',
     :ssh_port => '2255',
-    :vbox_config => vbox_config,
+    :config => vbox_config,
     :synced_folders => [
       { :vm_path => '/data', :ext_rel_path => './', :vm_owner => 'ubuntu' },
     ],
@@ -70,9 +76,9 @@ Vagrant::configure("2") do |config|
 
       config.vm.hostname = "#{machine[:name]}"
 
-      unless machine[:vbox_config].nil?
+      unless machine[:config].nil?
         config.vm.provider :virtualbox do |vb|
-          machine[:vbox_config].each do |hash|
+          machine[:config].each do |hash|
             hash.each do |key, value|
               vb.customize ['modifyvm', :id, "#{key}", "#{value}"]
             end
