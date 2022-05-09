@@ -5,7 +5,11 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install curl unzip jq m
 yes | sudo docker system prune -a
 yes | sudo docker system prune --volumes
 mkdir -p /etc/nomad
+
+# Persistence Layer
 sudo mkdir -p /opt/mysql/data
+sudo mkdir -p /opt/mysql/temporal
+
 cat <<EOF | sudo tee /etc/nomad/server.conf
 data_dir  = "/var/lib/nomad"
 
@@ -41,13 +45,11 @@ client {
     path      = "/opt/mysql/data"
     read_only = false
   }
-}
 
-plugin "docker" {
-  config {
-    auth {
-      config = "/etc/docker/dockercfg.json"
-    }
+  # TODO Switch to a more flexible storage backend.
+  host_volume "temporal-db" {
+    path      = "/opt/mysql/temporal"
+    read_only = false
   }
 }
 
